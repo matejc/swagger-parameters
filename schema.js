@@ -4,15 +4,20 @@ const assert = require('assert')
 const extend = require('xtend')
 const pointer = require('json-pointer')
 const partial = require('ap').partial
-const types = require('./types.json')
+
+let types = require('./types.json')
 
 module.exports = Schema
 
-function Schema (parameters, data) {
+function Schema (parameters, data, _types) {
   assert(
     Array.isArray(parameters) || parameters == null,
     'parameters must be undefined or an array'
   )
+
+  if (_types) {
+    types = _types;
+  }
 
   const schema = initial(types)
   if (!parameters || !parameters.length) {
